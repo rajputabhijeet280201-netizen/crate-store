@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum OrderStatus {
+  CREATED
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  name           String?
+  phone          String?
+  orders         Order[]
+  downloadTokens DownloadToken[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([email])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  priceInInr  Int // Stored in INR (e.g., 299, 699, 999)
+  fileKey     String // Private storage key (e.g., "products/seo-playbook.pdf")
+  isActive    Boolean  @default(true)
+  orders      Order[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id             String          @id @default(cuid())
+  orderNumber    String          @unique // e.g. GN-2026-1001
+  userId         String
+  user           User            @relation(fields: [userId], references: [id])
+  productId      String
+  product        Product         @relation(fields: [productId], references: [id])
+  amountInInr    Int
+  currency       String          @default("INR")
+  status         OrderStatus     @default(CREATED)
+  paymentMethod  String? // upi, card, netbanking, wallet
+  
+  // Attribution & Marketing Tracking (for real ROAS calculation)
+  utmSource      String?
+  utmMedium      String?
+  utmCampaign    String?
+  utmContent     String?
+  utmTerm        String?
+  referrer       String?
+  gclid          String?
+  fbclid         String?
+
+  invoiceNumber  String?
+  payment        Payment?
+  downloadTokens DownloadToken[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([userId])
+  @@index([productId])
+  @@index([status])
+  @@index([utmSource, utmCampaign])
+}
+
+model Payment {
+  id                 String   @id @default(cuid())
+  orderId            String   @unique
+  order              Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  razorpayOrderId    String
+  razorpayPaymentId  String?  @unique
+  razorpaySignature  String?
+  status             String // created, captured, failed, refunded
+  amountInPaise      Int
+  currency           String   @default("INR")
+  method             String? // upi, card, etc.
+  bank               String?
+  wallet             String?
+  vpa                String? // UPI ID if paid via UPI
+  errorDescription   String?
+  rawWebhookPayload  Json?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([razorpayOrderId])
+  @@index([razorpayPaymentId])
+}
+
+model DownloadToken {
+  id               String    @id @default(cuid())
+  token            String    @unique
+  orderId          String
+  order            Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User      @relation(fields: [userId], references: [id])
+  expiresAt        DateTime
+  maxUsageCount    Int       @default(5)
+  usageCount       Int       @default(0)
+  isRevoked        Boolean   @default(false)
+  lastDownloadedAt DateTime?
+  createdAt        DateTime  @default(now())
+
+  @@index([token])
+  @@index([orderId])
+  @@index([userId])
+}
+
+model Lead {
+  id               String   @id @default(cuid())
+  email            String
+  name             String?
+  source           String   @default("free_sample") // free_sample, remarketing, footer
+  utmSource        String?
+  utmMedium        String?
+  utmCampaign      String?
+  utmContent       String?
+  utmTerm          String?
+  referrer         String?
+  consentFlag      Boolean  @default(true) // DPDP Act compliance flag
+  consentTimestamp DateTime @default(now())
+  sampleSentAt     DateTime?
+  hasPurchased     Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([email])
+  @@index([utmSource, utmCampaign])
+}
+
+model EventLog {
+  id        String   @id @default(cuid())
+  eventName String
+  eventId   String? // Deduplication ID across Browser & Meta CAPI
+  email     String?
+  orderId   String?
+  metadata  Json?
+  ipHash    String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([eventName])
+  @@index([eventId])
+  @@index([createdAt])
+}
