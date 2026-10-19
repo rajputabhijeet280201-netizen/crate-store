@@ -1,7 +1,17 @@
-const BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+function getUrl(path) {
+  let base = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').trim();
+  base = base.replace(/\/+$/, '');
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  if (!base.endsWith('/api') && !cleanPath.startsWith('/api')) {
+    return `${base}/api${cleanPath}`;
+  }
+  return `${base}${cleanPath}`;
+}
+
 export async function api(path, { method = 'GET', body } = {}) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-  const res = await fetch(BASE + path, {
+  const url = getUrl(path);
+  const res = await fetch(url, {
     method, cache: 'no-store',
     headers: { 'Content-Type': 'application/json', ...(token && { Authorization: `Bearer ${token}` }) },
     body: body && JSON.stringify(body),

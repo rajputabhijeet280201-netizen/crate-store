@@ -11,6 +11,15 @@ app.use(cors({
   origin: true, // Allow frontend origin
   credentials: true
 }));
+app.options('*', cors({ origin: true, credentials: true }));
+
+// Normalize URL to collapse duplicate slashes
+app.use((req, res, next) => {
+  if (req.url && req.url.includes('//')) {
+    req.url = req.url.replace(/\/+/g, '/');
+  }
+  next();
+});
 
 app.use(express.json());
 
@@ -38,13 +47,12 @@ app.use(async (req, res, next) => {
 });
 
 // Health check routes
-app.get('/', (req, res) => res.json({ status: 'ok', message: 'Crate Store API is running' }));
-app.get('/api', (req, res) => res.json({ status: 'ok', message: 'Crate Store API is running' }));
+app.get(['/', '/api'], (req, res) => res.json({ status: 'ok', message: 'Crate Store API is running' }));
 
-// API routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/orders', require('./routes/orders'));
+// API routes (support both /api/* and /*)
+app.use(['/api/auth', '/auth'], require('./routes/auth'));
+app.use(['/api/products', '/products'], require('./routes/products'));
+app.use(['/api/orders', '/orders'], require('./routes/orders'));
 
 // Global error handler
 app.use((err, req, res, next) => {
