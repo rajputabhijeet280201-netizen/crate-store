@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs'), jwt = require('jsonwebtoken');
 const { User } = require('../models');
-const { auth, fail } = require('../middleware');
+const { auth, fail } = require('../authMiddleware');
 const sign = (u) => jwt.sign({ id: u._id, role: u.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
 const pub = (u) => ({ id: u._id, name: u.name, email: u.email, role: u.role });
 

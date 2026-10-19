@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Product, Order } = require('../models');
-const { auth, fail } = require('../middleware');
+const { auth, fail } = require('../authMiddleware');
 
 // Demo checkout: marks the order paid immediately.
 // Replace with Razorpay/Stripe: create the order as 'pending', then set 'paid' from the gateway webhook.

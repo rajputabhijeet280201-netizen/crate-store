@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Product } = require('../models');
-const { auth, admin, fail } = require('../middleware');
+const { auth, admin, fail } = require('../authMiddleware');
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 router.get('/', async (req, res) => {
