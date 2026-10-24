@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { PRODUCTS_LIST, formatInr } from '@/config/products';
 
