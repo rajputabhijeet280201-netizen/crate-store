@@ -9,9 +9,28 @@ export function NotesPreview() {
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
   const [activePageIndex, setActivePageIndex] = useState<number>(0);
   const [selectedProductSlug, setSelectedProductSlug] = useState<string>('complete-edition');
+  const [activeFormat, setActiveFormat] = useState<'visual' | 'code'>('visual');
 
-  const product: ProductTier = PRODUCTS_CONFIG[selectedProductSlug] || PRODUCTS_CONFIG['complete-edition'];
-  const totalPages = product.previewPages || 4;
+  const visualPages = [
+    '/previews/linux-infographic-p1.webp',
+    '/previews/linux-infographic-p2.webp',
+    '/previews/docker-infographic-p1.webp',
+    '/previews/docker-infographic-p2.webp',
+    '/previews/git-infographic-p1.webp',
+    '/previews/git-infographic-p2.webp',
+  ];
+
+  const codePages = [
+    '/previews/single-topic/page-1.webp',
+    '/previews/single-topic/page-2.webp',
+    '/previews/complete-edition/page-1.webp',
+    '/previews/complete-edition/page-2.webp',
+    '/previews/complete-edition/page-3.webp',
+    '/previews/complete-edition/page-4.webp',
+  ];
+
+  const currentPages = activeFormat === 'visual' ? visualPages : codePages;
+  const totalPages = currentPages.length;
 
   const handlePrevPage = useCallback(() => {
     setActivePageIndex((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
@@ -50,8 +69,8 @@ export function NotesPreview() {
     };
   }, [isLightboxOpen]);
 
-  const openSampleAt = (pageIdx: number, slug: string = 'complete-edition') => {
-    setSelectedProductSlug(slug);
+  const openSampleAt = (pageIdx: number, format: 'visual' | 'code' = activeFormat) => {
+    setActiveFormat(format);
     setActivePageIndex(pageIdx);
     setIsLightboxOpen(true);
   };
@@ -66,7 +85,7 @@ export function NotesPreview() {
     }
   };
 
-  const currentPreviewPath = `/previews/${product.slug}/page-${activePageIndex + 1}.webp`;
+  const currentPreviewPath = currentPages[activePageIndex] || currentPages[0];
 
   return (
     <section
@@ -92,7 +111,7 @@ export function NotesPreview() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
             <span className="font-sans text-xs font-bold uppercase tracking-wider text-emerald-700">
-              OPEN THE NOTEBOOK
+              OPEN THE NOTEBOOK • DUAL-FORMAT ENGINE
             </span>
             <h2 className="mt-2 font-sans text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-slate-900 leading-[1.08]">
               See what you&apos;re buying.
@@ -100,131 +119,280 @@ export function NotesPreview() {
           </div>
 
           <p className="max-w-md text-base sm:text-lg text-slate-600 leading-relaxed lg:pb-1">
-            These are real pages from the guides—not generic course thumbnails. Swipe through the notes and inspect the visual teaching style.
+            Every topic includes <strong>both formats</strong>. Toggle below to compare hand-drawn visual mental models with searchable code fieldbooks.
           </p>
         </div>
 
+        {/* Dual-Format Toggle Switch */}
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveFormat('visual');
+                setActivePageIndex(0);
+              }}
+              className={`inline-flex items-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition ${
+                activeFormat === 'visual'
+                  ? 'bg-[#0e593a] text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <span>🎨 Visual Infographics</span>
+              <span
+                className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
+                  activeFormat === 'visual'
+                    ? 'bg-emerald-800 text-emerald-200'
+                    : 'bg-slate-100 text-slate-600'
+                }`}
+              >
+                Diagrams
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveFormat('code');
+                setActivePageIndex(0);
+              }}
+              className={`inline-flex items-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition ${
+                activeFormat === 'code'
+                  ? 'bg-[#0e593a] text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <span>💻 Searchable Fieldbooks</span>
+              <span
+                className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
+                  activeFormat === 'code'
+                    ? 'bg-emerald-800 text-emerald-200'
+                    : 'bg-slate-100 text-slate-600'
+                }`}
+              >
+                Code &amp; Commands
+              </span>
+            </button>
+          </div>
+        </div>
+
         {/* 3 Realistic Taped Notebook Cards Grid */}
-        <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-8 items-stretch">
-          {/* Card 1: Architecture First (Linux & Git Foundations) */}
-          <div
-            onClick={() => openSampleAt(1, 'single-topic')}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
-          >
-            {/* Amber Washi Tape */}
-            <div
-              className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 -rotate-1 rounded-xs border-y border-amber-300/80 bg-amber-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
-              aria-hidden="true"
-            />
-
-            {/* Note Sheet Content with Real Page Image */}
-            <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
-              <div className="relative aspect-[1350/1800] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
-                <Image
-                  src="/previews/linux-infographic-p2.webp"
-                  alt="Linux for DevOps Visual Infographic Note"
-                  width={600}
-                  height={800}
-                  className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+        <div className="mt-10 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-8 items-stretch">
+          {activeFormat === 'visual' ? (
+            <>
+              {/* Card 1: Visual Linux Systems */}
+              <div
+                onClick={() => openSampleAt(1, 'visual')}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
+              >
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 -rotate-1 rounded-xs border-y border-amber-300/80 bg-amber-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
+                  aria-hidden="true"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
-                    <ZoomIn className="h-3.5 w-3.5" /> Inspect Infographic Note
+                <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
+                  <div className="relative aspect-[1350/1800] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
+                    <Image
+                      src="/previews/linux-infographic-p2.webp"
+                      alt="Linux for DevOps Visual Infographic Note"
+                      width={600}
+                      height={800}
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+                        <ZoomIn className="h-3.5 w-3.5" /> Inspect Visual Blueprint
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3.5 bg-white">
+                  <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
+                    01. Linux Systems &amp; Terminal
+                  </span>
+                  <span className="font-serif italic text-xs sm:text-sm font-medium text-[#854d0e] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    visual blueprint ↗
                   </span>
                 </div>
               </div>
-            </div>
 
-            {/* Bottom Caption Bar */}
-            <div className="flex items-center justify-between px-5 py-3.5 bg-white">
-              <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
-                01. Linux Systems &amp; Terminal
-              </span>
-              <span className="font-serif italic text-xs sm:text-sm font-medium text-[#854d0e] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                visual infographic ↗
-              </span>
-            </div>
-          </div>
-
-          {/* Card 2: Visual Mental Models (Docker & Kubernetes) */}
-          <div
-            onClick={() => openSampleAt(1, 'complete-edition')}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
-          >
-            {/* Sky Blue Washi Tape */}
-            <div
-              className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 rotate-1.5 rounded-xs border-y border-sky-300/80 bg-sky-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
-              aria-hidden="true"
-            />
-
-            {/* Note Sheet Content with Real Page Image */}
-            <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
-              <div className="relative aspect-[918/1224] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
-                <Image
-                  src="/previews/docker-infographic-p2.webp"
-                  alt="Docker Architecture & Isolation Infographic Note"
-                  width={600}
-                  height={800}
-                  className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+              {/* Card 2: Visual Docker Architecture */}
+              <div
+                onClick={() => openSampleAt(3, 'visual')}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
+              >
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 rotate-1.5 rounded-xs border-y border-sky-300/80 bg-sky-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
+                  aria-hidden="true"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
-                    <ZoomIn className="h-3.5 w-3.5" /> Inspect Infographic Note
+                <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
+                  <div className="relative aspect-[918/1224] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
+                    <Image
+                      src="/previews/docker-infographic-p2.webp"
+                      alt="Docker Architecture & Isolation Infographic Note"
+                      width={600}
+                      height={800}
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+                        <ZoomIn className="h-3.5 w-3.5" /> Inspect Visual Blueprint
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3.5 bg-white">
+                  <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
+                    02. Docker Container Architecture
+                  </span>
+                  <span className="font-serif italic text-xs sm:text-sm font-medium text-[#854d0e] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    visual blueprint ↗
                   </span>
                 </div>
               </div>
-            </div>
 
-            {/* Bottom Caption Bar */}
-            <div className="flex items-center justify-between px-5 py-3.5 bg-white">
-              <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
-                02. Docker Container Architecture
-              </span>
-              <span className="font-serif italic text-xs sm:text-sm font-medium text-[#854d0e] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                visual infographic ↗
-              </span>
-            </div>
-          </div>
-
-          {/* Card 3: Production Workflows (MLOps & Cloud Workflows) */}
-          <div
-            onClick={() => openSampleAt(0, 'single-topic')}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
-          >
-            {/* Sage Green Washi Tape */}
-            <div
-              className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 -rotate-1 rounded-xs border-y border-emerald-300/80 bg-emerald-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
-              aria-hidden="true"
-            />
-
-            {/* Note Sheet Content with Real Page Image */}
-            <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
-              <div className="relative aspect-[648/972] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
-                <Image
-                  src="/previews/git-infographic-p2.webp"
-                  alt="Git & GitHub Pro Workflow Infographic Note"
-                  width={600}
-                  height={800}
-                  className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+              {/* Card 3: Visual Git Workflows */}
+              <div
+                onClick={() => openSampleAt(5, 'visual')}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
+              >
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 -rotate-1 rounded-xs border-y border-emerald-300/80 bg-emerald-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
+                  aria-hidden="true"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
-                    <ZoomIn className="h-3.5 w-3.5" /> Inspect Infographic Note
+                <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
+                  <div className="relative aspect-[648/972] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
+                    <Image
+                      src="/previews/git-infographic-p2.webp"
+                      alt="Git & GitHub Pro Workflow Infographic Note"
+                      width={600}
+                      height={800}
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+                        <ZoomIn className="h-3.5 w-3.5" /> Inspect Visual Blueprint
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3.5 bg-white">
+                  <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
+                    03. Git &amp; GitHub Branching Pro
+                  </span>
+                  <span className="font-serif italic text-xs sm:text-sm font-medium text-[#854d0e] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    visual blueprint ↗
                   </span>
                 </div>
               </div>
-            </div>
+            </>
+          ) : (
+            <>
+              {/* Card 1: Code Linux Fieldbook */}
+              <div
+                onClick={() => openSampleAt(0, 'code')}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
+              >
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 -rotate-1 rounded-xs border-y border-emerald-300/80 bg-emerald-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
+                  aria-hidden="true"
+                />
+                <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
+                  <div className="relative aspect-[900/1273] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
+                    <Image
+                      src="/previews/single-topic/page-1.webp"
+                      alt="Linux Complete Fieldbook Searchable Reference"
+                      width={600}
+                      height={800}
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+                        <ZoomIn className="h-3.5 w-3.5" /> Inspect Code &amp; Commands
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3.5 bg-white">
+                  <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
+                    01. Linux Systems Fieldbook
+                  </span>
+                  <span className="font-serif italic text-xs sm:text-sm font-medium text-emerald-700 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    searchable code ↗
+                  </span>
+                </div>
+              </div>
 
-            {/* Bottom Caption Bar */}
-            <div className="flex items-center justify-between px-5 py-3.5 bg-white">
-              <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
-                03. Git &amp; GitHub Branching Pro
-              </span>
-              <span className="font-serif italic text-xs sm:text-sm font-medium text-[#854d0e] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                visual infographic ↗
-              </span>
-            </div>
-          </div>
+              {/* Card 2: Code Docker Working Guide */}
+              <div
+                onClick={() => openSampleAt(3, 'code')}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
+              >
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 rotate-1.5 rounded-xs border-y border-amber-300/80 bg-amber-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
+                  aria-hidden="true"
+                />
+                <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
+                  <div className="relative aspect-[900/1273] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
+                    <Image
+                      src="/previews/complete-edition/page-2.webp"
+                      alt="Docker Working Guide Searchable Code"
+                      width={600}
+                      height={800}
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+                        <ZoomIn className="h-3.5 w-3.5" /> Inspect Code &amp; Commands
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3.5 bg-white">
+                  <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
+                    02. Docker Working Guide
+                  </span>
+                  <span className="font-serif italic text-xs sm:text-sm font-medium text-emerald-700 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    searchable code ↗
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: Code Kubernetes Incident Scenarios */}
+              <div
+                onClick={() => openSampleAt(4, 'code')}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white shadow-[0_12px_35px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-8px_rgba(0,0,0,0.12)] cursor-pointer overflow-hidden"
+              >
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-24 -rotate-1 rounded-xs border-y border-sky-300/80 bg-sky-200/80 shadow-xs backdrop-blur-[1px] pointer-events-none"
+                  aria-hidden="true"
+                />
+                <div className="p-3 sm:p-4 pt-6 bg-[#fafaf7] border-b border-slate-200/80 flex-1 flex flex-col items-center">
+                  <div className="relative aspect-[900/1273] w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-inner">
+                    <Image
+                      src="/previews/complete-edition/page-3.webp"
+                      alt="Kubernetes Incident Production Scenarios"
+                      width={600}
+                      height={800}
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+                        <ZoomIn className="h-3.5 w-3.5" /> Inspect Code &amp; Commands
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-5 py-3.5 bg-white">
+                  <span className="font-sans text-sm sm:text-base font-bold text-slate-900">
+                    03. Kubernetes Incident Scenarios
+                  </span>
+                  <span className="font-serif italic text-xs sm:text-sm font-medium text-emerald-700 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    searchable code ↗
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Action Buttons & Trust Line under the 3 cards */}
@@ -268,7 +436,7 @@ export function NotesPreview() {
             <div className="flex w-full items-center justify-between pb-3 text-white">
               <div className="flex items-center gap-3">
                 <span className="font-sans text-sm sm:text-base font-bold">
-                  {product.name} — Page {activePageIndex + 1} of {totalPages}
+                  {activeFormat === 'visual' ? '🎨 Visual Blueprint Edition' : '💻 Searchable Code Fieldbook'} — Page {activePageIndex + 1} of {totalPages}
                 </span>
                 <span className="rounded bg-emerald-600/80 px-2 py-0.5 text-xs font-semibold">
                   Sample Preview
@@ -289,7 +457,7 @@ export function NotesPreview() {
             <div className="relative aspect-[900/1273] w-full max-h-[75vh] overflow-hidden rounded-xl bg-white shadow-2xl">
               <Image
                 src={currentPreviewPath}
-                alt={`${product.name} preview page ${activePageIndex + 1}`}
+                alt={`Sample preview page ${activePageIndex + 1}`}
                 width={900}
                 height={1273}
                 priority

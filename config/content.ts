@@ -14,7 +14,7 @@ export const CONTENT_CONFIG = {
   },
   whatsInside: {
     title: 'The 5-Phase Production Curriculum',
-    subtitle: '16 comprehensive fieldbooks structured around real-world production engineering, architecture diagrams, and senior technical interviews.',
+    subtitle: '16 comprehensive handbooks delivered in dual-engine format: Visual Architectural Blueprints + Searchable Terminal Code Fieldbooks.',
     cards: [
       {
         icon: 'Terminal',

@@ -165,6 +165,32 @@ export function Pricing({ onSelectProduct }: PricingProps) {
                     {product.tagline}
                   </p>
 
+                  {/* Dual Format Indicator */}
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-bold ${
+                        isBestValue
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
+                          : isPurple
+                          ? 'bg-purple-50 text-purple-700 border border-purple-200'
+                          : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                      }`}
+                    >
+                      🎨 Visual Blueprints
+                    </span>
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-bold ${
+                        isBestValue
+                          ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30'
+                          : isPurple
+                          ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                          : 'bg-slate-100 text-slate-700 border border-slate-200'
+                      }`}
+                    >
+                      💻 Searchable Code
+                    </span>
+                  </div>
+
                   {/* Price Block */}
                   <div
                     className={`mt-6 pb-6 border-b ${

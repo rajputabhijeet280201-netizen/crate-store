@@ -44,12 +44,18 @@ export async function sendPurchaseEmail({
             <div style="padding: 24px 0;">
               <p>Hi there,</p>
               <p>Your payment of <strong>₹${amountInInr}</strong> for <strong>${productTitle}</strong> has been successfully processed.</p>
-              <p>Your personal, signed study materials are ready for instant download:</p>
+              <p>Your package includes <strong>two complete editions</strong>: hand-drawn visual architectural blueprints plus 100% searchable code &amp; command fieldbooks.</p>
               
               <div style="text-align: center; margin: 32px 0;">
                 <a href="${downloadUrl}" style="background-color: #0e593a; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                  📥 Download Your Notes Now
+                  📥 Download Complete Package (ZIP — Both Formats)
                 </a>
+              </div>
+
+              <div style="text-align: center; margin: 16px 0; font-size: 13px;">
+                <span style="color: #64748b;">Or download individual formats directly:</span><br />
+                <a href="${downloadUrl}?format=visual" style="color: #0e593a; font-weight: bold; text-decoration: underline; margin-right: 16px;">🎨 Visual Infographics (PDF)</a>
+                <a href="${downloadUrl}?format=html" style="color: #0e593a; font-weight: bold; text-decoration: underline;">💻 Searchable Fieldbook (PDF)</a>
               </div>
               
               <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 24px 0; font-size: 13px; color: #475569;">

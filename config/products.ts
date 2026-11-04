@@ -21,6 +21,12 @@ export interface ProductTier {
   sampleFileKey?: string;
   /** Number of preview pages to show (default 4). */
   previewPages?: number;
+  /** Visual infographics format storage path in Supabase. */
+  visualStoragePath?: string;
+  /** Searchable HTML/code fieldbook storage path in Supabase. */
+  htmlStoragePath?: string;
+  /** Visual format badges. */
+  formatBadges?: string[];
 }
 
 export interface IndividualProduct {
@@ -44,17 +50,19 @@ export const PRODUCTS_CONFIG: Record<string, ProductTier> = {
     slug: 'single-topic',
     name: 'Phase 1: Linux & Git Starter Pack',
     badge: 'FOUNDATION',
-    tagline: 'Master operating system internals and clean version control. Includes Linux for DevOps Fieldbook (79 pages) and Git & GitHub Pro (30 pages).',
+    tagline: 'Master operating system internals and clean version control. Includes both Visual Infographics and Searchable Code Fieldbooks for Linux (79p) and Git & GitHub Pro (30p).',
     priceInInr: 299,
     originalPriceInInr: 999,
     ctaText: 'Buy Starter Pack (₹299)',
+    formatBadges: ['🎨 Visual Infographics', '💻 Searchable Fieldbooks'],
     features: [
-      '01-Linux for DevOps Complete Fieldbook (79 pages, 4.4 MB)',
-      '02-Git & GitHub Pro Workflow Fieldbook (30 pages)',
+      '🎨 Visual Infographics Edition: Hand-drawn architectural blueprints for Linux & Git',
+      '💻 Searchable Code Fieldbooks: 100% searchable text, commands & configs (79p + 30p)',
       '00-Official 30-Day DevOps & MLOps Curriculum & Study Guide',
       '/etc, /var, /proc filesystems, process signals (SIGTERM vs SIGKILL)',
       'Blobs, trees, commits, clean rebasing vs merging & PR workflows',
       'High-resolution vector PDFs with handwritten architecture diagrams',
+      'Dual-Format Master ZIP: Neatly organized into visual and fieldbook folders',
       'Instant ZIP download on Cashfree payment completion',
     ],
     notIncluded: [
@@ -66,6 +74,8 @@ export const PRODUCTS_CONFIG: Record<string, ProductTier> = {
     modulesIncluded: ['Phase 1: Systems & Core Foundations', '30-Day Study Guide'],
     storagePath: 'products/linux-git-starter-pack.zip',
     fileKey: 'products/linux-git-starter-pack.zip',
+    visualStoragePath: 'visual/01-Core-Foundations/01-linux-for-devops-visual-infographics.pdf',
+    htmlStoragePath: 'devopsjeet.tech-books/01-Core-Foundations/01-linux-for-devops-fieldbook.pdf',
     sampleStoragePath: 'samples/devops-mlops-curriculum-guide.pdf',
     sampleFileKey: 'samples/devops-mlops-curriculum-guide.pdf',
     previewPages: 4,
@@ -80,8 +90,11 @@ export const PRODUCTS_CONFIG: Record<string, ProductTier> = {
     originalPriceInInr: 1999,
     isPopular: true,
     ctaText: 'Get DevOps Track (₹699)',
+    formatBadges: ['🎨 Visual Infographics', '💻 Searchable Fieldbooks'],
     features: [
       '9 Production Handbooks across Phases 1, 2, 3, and 4 (865 pages total)',
+      '🎨 Visual Blueprint Editions: High-res architecture flowcharts & mental models (Linux, Git, Docker, CI/CD)',
+      '💻 Searchable Terminal Companions: 100% searchable code, YAMLs, Dockerfiles & bash recipes',
       '01-Linux for DevOps (79p) + 02-Git & GitHub Pro (30p)',
       '03-Docker Working Guide (241p) + 04-Kubernetes Production Scenarios (154p)',
       '05-CI/CD with GitHub Actions (73p) + 06-AWS for DevOps Architecture (142p)',
@@ -102,6 +115,8 @@ export const PRODUCTS_CONFIG: Record<string, ProductTier> = {
     ],
     storagePath: 'products/devops-complete-edition.zip',
     fileKey: 'products/devops-complete-edition.zip',
+    visualStoragePath: 'visual/02-Containers-and-Orchestration/03-docker-working-guide-visual-infographics.pdf',
+    htmlStoragePath: 'devopsjeet.tech-books/02-Containers-and-Orchestration/03-docker-working-guide.pdf',
     sampleStoragePath: 'samples/devops-mlops-curriculum-guide.pdf',
     sampleFileKey: 'samples/devops-mlops-curriculum-guide.pdf',
     previewPages: 6,
@@ -111,12 +126,15 @@ export const PRODUCTS_CONFIG: Record<string, ProductTier> = {
     slug: 'lifetime-bundle',
     name: 'All-Access Master Pass: DevOps + MLOps + GenAI',
     badge: 'ALL 16 HANDBOOKS • 1,804 PAGES',
-    tagline: 'The full infrastructure-to-AI engineering path. All 5 Phases, 16 Handbooks, 1,804 pages including Production MLOps, LLMs, DVC, PyTorch, and SageMaker.',
+    tagline: 'The full infrastructure-to-AI engineering path. All 5 Phases, 16 Handbooks, 1,804 pages including Production MLOps, LLMs, DVC, PyTorch, and SageMaker in both formats.',
     priceInInr: 999,
     originalPriceInInr: 3999,
     ctaText: 'Unlock All-Access Pass (₹999)',
+    formatBadges: ['🎨 Visual Infographics', '💻 Searchable Fieldbooks'],
     features: [
       'ALL 16 Handbooks across All 5 Phases (1,804 total pages of visual field notes)',
+      '🎨 Visual Architectural Blueprints: High-res conceptual maps, container pipelines & network flows',
+      '💻 Searchable Terminal Companions: 100% searchable code, Python scripts, YAMLs & PyTorch code',
       'Complete DevOps Core (Phases 1 to 4): Linux, Git, Docker, K8s, CI/CD & AWS',
       'Phase 4 Interview Arsenal: 75 AWS Scenarios, 40 Docker Labs & 5 Microservice Projects',
       '10-DVC in Practice (243p): Data & model versioning pipelines and ML DAGs',
@@ -137,6 +155,8 @@ export const PRODUCTS_CONFIG: Record<string, ProductTier> = {
     ],
     storagePath: 'products/all-access-bundle.zip',
     fileKey: 'products/all-access-bundle.zip',
+    visualStoragePath: 'visual/01-Core-Foundations/01-linux-for-devops-visual-infographics.pdf',
+    htmlStoragePath: 'devopsjeet.tech-books/00-Curriculum/devops-mlops-curriculum-guide.pdf',
     sampleStoragePath: 'samples/devops-mlops-curriculum-guide.pdf',
     sampleFileKey: 'samples/devops-mlops-curriculum-guide.pdf',
     previewPages: 6,

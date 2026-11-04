@@ -93,12 +93,12 @@ export function Hero() {
           {/* Left Column: Headlines, Pitch & CTAs */}
           <div className="lg:col-span-7">
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-emerald-50/70 px-3.5 py-1 text-[11px] font-bold tracking-wider text-emerald-800 uppercase sm:text-xs">
-              <span>16 VISUAL FIELD GUIDES</span>
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-emerald-300/80 bg-emerald-50/70 px-3.5 py-1 text-[11px] font-bold tracking-wider text-emerald-800 uppercase sm:text-xs">
+              <span>🎨 VISUAL INFOGRAPHICS</span>
+              <span className="text-emerald-500 font-black">+</span>
+              <span>💻 SEARCHABLE FIELD GUIDES</span>
               <span className="text-emerald-500 font-black">•</span>
               <span>1,804 PAGES</span>
-              <span className="text-emerald-500 font-black">•</span>
-              <span>5 PRODUCTION PHASES</span>
             </div>
 
             {/* Main Headline */}
@@ -112,7 +112,7 @@ export function Hero() {
 
             {/* Subheading */}
             <p className="mt-6 max-w-xl text-base text-slate-600 sm:text-lg lg:text-xl leading-relaxed">
-              1,804 pages of real diagrams, practical commands, and battle-tested production workflows you can master and keep open right beside your terminal.
+              Every topic comes in <strong>two complete formats</strong>: hand-drawn visual architectural blueprints for rapid visual recall, plus 100% searchable text &amp; code fieldbooks with copy-pasteable commands right beside your terminal.
             </p>
 
             {/* Action Buttons */}
@@ -139,7 +139,7 @@ export function Hero() {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs sm:text-sm font-medium text-slate-600">
               <span className="inline-flex items-center gap-2">
                 <Download className="h-4 w-4 text-emerald-600 shrink-0" strokeWidth={2.2} />
-                <span>Instant ZIP with 16 Handbooks</span>
+                <span>Dual-Format ZIP (Visual + Code Fieldbooks)</span>
               </span>
 
               <span className="inline-flex items-center gap-2">
@@ -187,7 +187,7 @@ export function Hero() {
                         Linux &amp; Git Starter Pack
                       </h4>
                       <p className="text-xs text-slate-500 font-medium leading-tight">
-                        Phase 1 • 2 Handbooks • 109 pages
+                        Phase 1 • Visual + Code Editions • 109 pages
                       </p>
                     </div>
                   </div>
@@ -244,7 +244,7 @@ export function Hero() {
                         All-Access Master Pass
                       </h4>
                       <p className="text-xs text-emerald-200/80 font-medium leading-tight">
-                        All 16 Handbooks • Phases 1–5
+                        All 16 Handbooks • Dual Formats • Phases 1–5
                       </p>
                     </div>
                   </div>
@@ -285,7 +285,7 @@ export function Hero() {
                         DevOps Complete Track
                       </h4>
                       <p className="text-xs text-slate-500 font-medium leading-tight">
-                        Phases 1–4 • 9 Handbooks • 865 pages
+                        Phases 1–4 • Visual + Code Editions • 865 pages
                       </p>
                     </div>
                   </div>

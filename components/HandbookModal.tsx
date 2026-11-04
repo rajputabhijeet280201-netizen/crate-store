@@ -111,6 +111,21 @@ export function HandbookModal({
             </div>
           </div>
 
+          {/* Dual Edition Inclusion Pill */}
+          <div className="flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-2.5 text-xs text-emerald-900">
+            <div className="flex items-center gap-2">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
+                ✓
+              </span>
+              <span className="font-semibold">
+                Includes both editions: <strong>Visual Infographic Blueprint</strong> + <strong>Searchable Code Fieldbook</strong>
+              </span>
+            </div>
+            <span className="hidden sm:inline-block rounded bg-emerald-200/80 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-emerald-800">
+              2-in-1 Asset
+            </span>
+          </div>
+
           {/* Mode Switcher Tabs if in preview */}
           {mode === 'preview' ? (
             <div className="space-y-4">

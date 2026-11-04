@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifySignedDownloadToken } from '@/lib/token';
 import { getFileStream, fileExists } from '@/lib/storage';
 import { prisma } from '@/lib/prisma';
+import { PRODUCTS_CONFIG, INDIVIDUAL_PRODUCTS } from '@/config/products';
 import fs from 'fs';
 import path from 'path';
 
@@ -109,7 +110,34 @@ export async function GET(
   }
 
   const { fileKey } = verification.payload;
-  const filename = path.basename(fileKey) || 'devops-study-guide.pdf';
+
+  // Format querying (?format=visual | ?format=html | ?format=all)
+  const { searchParams } = new URL(req.url);
+  const format = searchParams.get('format')?.toLowerCase();
+
+  let targetFileKey = fileKey;
+  if (format === 'visual' || format === 'html') {
+    const tier = Object.values(PRODUCTS_CONFIG).find(
+      (p) => p.storagePath === fileKey || p.fileKey === fileKey
+    );
+    const individual = INDIVIDUAL_PRODUCTS.find(
+      (p) => p.storagePath === fileKey || p.fileKey === fileKey
+    );
+
+    if (format === 'visual') {
+      const visualPath = tier?.visualStoragePath || individual?.visualStoragePath;
+      if (visualPath) {
+        targetFileKey = visualPath;
+      }
+    } else if (format === 'html') {
+      const htmlPath = tier?.htmlStoragePath;
+      if (htmlPath) {
+        targetFileKey = htmlPath;
+      }
+    }
+  }
+
+  const filename = path.basename(targetFileKey) || 'devops-study-guide.pdf';
   const ext = path.extname(filename).toLowerCase();
   const contentType = ext === '.zip' ? 'application/zip' : ext === '.pdf' ? 'application/pdf' : 'application/octet-stream';
 
@@ -118,9 +146,9 @@ export async function GET(
 
     // 3. Stream from Supabase Storage (first preference)
     try {
-      const exists = await fileExists(fileKey);
+      const exists = await fileExists(targetFileKey);
       if (exists) {
-        const blob = await getFileStream(fileKey);
+        const blob = await getFileStream(targetFileKey);
         const arrayBuf = await blob.arrayBuffer();
         fileBytes = new Uint8Array(arrayBuf);
       }
@@ -130,7 +158,7 @@ export async function GET(
 
     // 4. Fallback to local-pdfs if present
     if (!fileBytes) {
-      const localPath = path.resolve(process.cwd(), 'local-pdfs', fileKey);
+      const localPath = path.resolve(process.cwd(), 'local-pdfs', targetFileKey);
       if (fs.existsSync(localPath)) {
         const fileBuf = fs.readFileSync(localPath);
         fileBytes = new Uint8Array(fileBuf);
@@ -160,7 +188,7 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error(`[Download Route Error] Failed to stream ${fileKey}:`, error);
+    console.error(`[Download Route Error] Failed to stream ${targetFileKey}:`, error);
     return new NextResponse('Internal server error streaming file', { status: 500 });
   }
 }
