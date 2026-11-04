@@ -1,11 +1,11 @@
 export const SITE_CONFIG = {
-  name: 'GrowthNotes',
-  tagline: 'High-Retention Digital Marketing Study Notes (PDF Downloads)',
+  name: 'DevOps with Jeet',
+  tagline: 'Concise, hands-on DevOps and cloud study notes (PDF downloads)',
   description:
-    'Clear, practical digital marketing study notes crafted for students, freelancers, and beginners in India. Master SEO, Meta Ads, Google Ads, GA4, and Funnels.',
+    'Clear, practical DevOps study notes for engineers, students, and career-switchers in India. Covers Kubernetes, Docker, CI/CD, Terraform, and observability.',
   url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-  supportEmail: 'support@growthnotes.in',
-  businessName: 'GrowthNotes Digital Learning',
+  supportEmail: 'support@devopswithjeet.in',
+  businessName: 'DevOps with Jeet Digital Learning',
   businessAddress: 'Sector 62, Noida, Uttar Pradesh 201309, India',
   currency: 'INR',
   currencySymbol: '₹',
@@ -17,8 +17,8 @@ export const SITE_CONFIG = {
 
   // Socials / Channels
   channels: {
-    instagram: 'https://instagram.com/growthnotes.in',
-    youtube: 'https://youtube.com/@growthnotes',
+    instagram: 'https://instagram.com/devopswithjeet',
+    youtube: 'https://youtube.com/@devopswithjeet',
     whatsapp: 'https://wa.me/919999999999',
   },
 

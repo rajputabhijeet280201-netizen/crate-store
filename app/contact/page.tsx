@@ -4,7 +4,7 @@ import { SITE_CONFIG } from '@/config/site';
 
 export const metadata = {
   title: `Contact & Support — ${SITE_CONFIG.name}`,
-  description: 'Customer support and grievance officer contact details for GrowthNotes.',
+  description: 'Customer support and grievance officer contact details for DevOps with Jeet.',
 };
 
 export default function ContactPage() {
@@ -15,7 +15,7 @@ export default function ContactPage() {
           href="/"
           className="text-xs font-semibold text-accent hover:underline focus-visible:outline-accent"
         >
-          ← Back to GrowthNotes Store
+          ← Back to DevOps with Jeet
         </Link>
 
         <h1 className="mt-4 font-serif text-3xl font-bold sm:text-4xl">Contact &amp; Support</h1>
@@ -29,7 +29,6 @@ export default function ContactPage() {
               Direct Email Support
             </h2>
             <p className="mt-2 text-base font-semibold text-ink">
-              [CONTACT EMAIL]:{' '}
               <a href={`mailto:${SITE_CONFIG.supportEmail}`} className="text-accent underline">
                 {SITE_CONFIG.supportEmail}
               </a>

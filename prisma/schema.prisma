@@ -79,13 +79,18 @@ model Payment {
   id                 String   @id @default(cuid())
   orderId            String   @unique
   order              Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  razorpayOrderId    String
+  gateway            String   @default("CASHFREE") // "CASHFREE" | "RAZORPAY"
+  cfOrderId          String?  @unique
+  cfPaymentId        String?  @unique
+  paymentSessionId   String?
+  razorpayOrderId    String?
   razorpayPaymentId  String?  @unique
   razorpaySignature  String?
-  status             String // created, captured, failed, refunded
-  amountInPaise      Int
+  status             String // created, captured, failed, refunded, SUCCESS, FAILED, PENDING
+  amountInPaise      Int?
+  amountInRupees     Float?
   currency           String   @default("INR")
-  method             String? // upi, card, etc.
+  method             String? // upi, card, netbanking, wallet, etc.
   bank               String?
   wallet             String?
   vpa                String? // UPI ID if paid via UPI
@@ -94,6 +99,8 @@ model Payment {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
+  @@index([cfOrderId])
+  @@index([cfPaymentId])
   @@index([razorpayOrderId])
   @@index([razorpayPaymentId])
 }

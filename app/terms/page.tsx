@@ -4,7 +4,7 @@ import { SITE_CONFIG } from '@/config/site';
 
 export const metadata = {
   title: `Terms & Conditions — ${SITE_CONFIG.name}`,
-  description: 'Terms of service and digital purchase agreements for GrowthNotes.',
+  description: 'Terms of service and digital purchase agreements for DevOps with Jeet.',
 };
 
 export default function TermsPage() {
@@ -15,13 +15,13 @@ export default function TermsPage() {
           href="/"
           className="text-xs font-semibold text-accent hover:underline focus-visible:outline-accent"
         >
-          ← Back to GrowthNotes Store
+          ← Back to DevOps with Jeet
         </Link>
 
         <h1 className="mt-4 font-serif text-3xl font-bold sm:text-4xl">Terms &amp; Conditions</h1>
-        <div className="mt-3 inline-block rounded bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 border border-amber-200">
-          [PLACEHOLDER LEGAL TEXT — MUST BE REVIEWED BY A LEGAL PROFESSIONAL]
-        </div>
+        <p className="mt-2 text-xs text-muted">
+          Governed by the Information Technology Act, 2000 &amp; Indian Contract Act • Last updated: November 2026
+        </p>
 
         <div className="mt-8 space-y-6 text-sm leading-relaxed text-ink/80">
           <section>
@@ -37,7 +37,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-base font-bold text-ink">2. Payments &amp; Delivery</h2>
             <p className="mt-2">
-              All transactions are processed securely in Indian Rupees (INR) via Razorpay. Digital
+              All transactions are processed securely in Indian Rupees (INR) via Cashfree. Digital
               download links are generated immediately upon verified payment capture.
             </p>
           </section>
@@ -46,7 +46,7 @@ export default function TermsPage() {
             <h2 className="text-base font-bold text-ink">3. Limitation of Liability</h2>
             <p className="mt-2">
               The study notes provided are educational references based on industry best practices.
-              We do not guarantee specific business results, job placements, or advertising ROAS.
+              We do not guarantee specific career outcomes, exam pass rates, or job placements.
             </p>
           </section>
 

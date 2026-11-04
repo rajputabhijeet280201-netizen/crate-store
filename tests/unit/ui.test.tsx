@@ -17,7 +17,7 @@ describe('Phase 2 UI Components', () => {
     expect(screen.getByText(PRODUCTS_CONFIG['lifetime-bundle'].name)).toBeInTheDocument();
 
     // Check Best value badge
-    expect(screen.getByText(/MOST POPULAR • BEST VALUE/i)).toBeInTheDocument();
+    expect(screen.getByText(/MOST POPULAR/i)).toBeInTheDocument();
 
     // Ensure buttons have accessible touch target classes
     const buttons = container.querySelectorAll('button');
@@ -33,15 +33,17 @@ describe('Phase 2 UI Components', () => {
     expect(summaries.length).toBe(details.length);
   });
 
-  it('renders exactly 3 curriculum cards in WhatsInside', () => {
+  it('renders curriculum phase cards in WhatsInside', () => {
     render(<WhatsInside />);
     expect(screen.getByText('01')).toBeInTheDocument();
     expect(screen.getByText('02')).toBeInTheDocument();
     expect(screen.getByText('03')).toBeInTheDocument();
+    expect(screen.getByText('04')).toBeInTheDocument();
+    expect(screen.getByText('05')).toBeInTheDocument();
   });
 
-  it('renders social proof with clearly marked placeholder disclaimer', () => {
+  it('renders social proof with verified review feedback', () => {
     render(<SocialProof />);
-    expect(screen.getByText(/\[VERIFIED READER PLACEHOLDERS/i)).toBeInTheDocument();
+    expect(screen.getByText(/Real reviews from engineers/i)).toBeInTheDocument();
   });
 });

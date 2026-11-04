@@ -40,7 +40,7 @@ export function StickyMobileBar() {
       <div className="flex items-center justify-between gap-3">
         <div>
           <span className="block text-[11px] font-bold uppercase tracking-wider text-accent">
-            Master Digital Marketing
+            Master DevOps
           </span>
           <div className="flex items-baseline gap-1.5">
             <span className="text-xs text-muted">From</span>

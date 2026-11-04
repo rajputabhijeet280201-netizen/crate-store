@@ -29,9 +29,6 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "client",
-    "server",
-    "legacy"
+    "node_modules"
   ]
 }

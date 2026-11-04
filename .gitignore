@@ -53,3 +53,6 @@ Thumbs.db
 
 # Vercel
 .vercel/
+
+# Local PDF files for upload script (never commit)
+local-pdfs/

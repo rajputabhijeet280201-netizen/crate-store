@@ -15,15 +15,15 @@ export default function RefundPage() {
           href="/"
           className="text-xs font-semibold text-accent hover:underline focus-visible:outline-accent"
         >
-          ← Back to GrowthNotes Store
+          ← Back to DevOps with Jeet
         </Link>
 
         <h1 className="mt-4 font-serif text-3xl font-bold sm:text-4xl">
           Refund &amp; Cancellation Policy
         </h1>
-        <div className="mt-3 inline-block rounded bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 border border-amber-200">
-          [YOUR REFUND POLICY — MUST BE REVIEWED BY A LEGAL PROFESSIONAL]
-        </div>
+        <p className="mt-2 text-xs text-muted">
+          Last updated: November 2026 • Effective for all digital purchases on {SITE_CONFIG.name}
+        </p>
 
         <div className="mt-8 space-y-6 text-sm leading-relaxed text-ink/80">
           <section>
@@ -53,7 +53,7 @@ export default function RefundPage() {
             <p className="mt-2">
               If an amount was deducted twice from your account due to a payment gateway timeout, the
               duplicate payment is automatically refunded back to your original payment method within
-              5–7 business days as per Razorpay standard bank timelines.
+              5–7 business days as per Cashfree standard bank timelines.
             </p>
           </section>
         </div>
