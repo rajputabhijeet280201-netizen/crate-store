@@ -36,6 +36,14 @@ async function main() {
     checks.push({ label: `${item.title} (handbook)`, storagePath: item.storagePath });
   }
 
+  // Visual Infographics
+  checks.push(
+    { label: 'Linux (Visual Infographics)', storagePath: 'visual/01-Core-Foundations/01-linux-for-devops-visual-infographics.pdf' },
+    { label: 'Git (Visual Infographics)', storagePath: 'visual/01-Core-Foundations/02-git-and-github-pro-visual-infographics.pdf' },
+    { label: 'Docker (Visual Infographics)', storagePath: 'visual/02-Containers-and-Orchestration/03-docker-working-guide-visual-infographics.pdf' },
+    { label: 'CI/CD (Visual Infographics)', storagePath: 'visual/03-Automation-and-Cloud/05-ci-cd-with-github-actions-visual-infographics.pdf' },
+  );
+
   // Deduplicate
   const seen = new Set<string>();
   const uniqueChecks = checks.filter((c) => {

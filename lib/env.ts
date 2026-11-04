@@ -47,7 +47,7 @@ const envSchema = z.object({
 
   // Email (Resend)
   RESEND_API_KEY: z.string().optional().default('re_placeholder_key'),
-  RESEND_FROM_EMAIL: z.string().default('DevOps with Jeet <downloads@devopswithjeet.in>'),
+  RESEND_FROM_EMAIL: z.string().default('DevOps with Jeet <support@devopsjeet.tech>'),
 
   // Admin Security
   ADMIN_SECRET_KEY: z.string().min(8).default('devopswithjeet_admin_super_secret'),

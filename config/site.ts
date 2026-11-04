@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   description:
     'Clear, practical DevOps study notes for engineers, students, and career-switchers in India. Covers Kubernetes, Docker, CI/CD, Terraform, and observability.',
   url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-  supportEmail: 'support@devopswithjeet.in',
+  supportEmail: 'support@devopsjeet.tech',
   businessName: 'DevOps with Jeet Digital Learning',
   businessAddress: 'Sector 62, Noida, Uttar Pradesh 201309, India',
   currency: 'INR',

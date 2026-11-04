@@ -18,6 +18,7 @@
     "prisma:push": "prisma db push",
     "seed:products": "tsx scripts/seed-products.ts",
     "upload:notes": "tsx scripts/upload-notes.ts",
+    "upload:visual": "tsx scripts/upload-visual-notes.ts",
     "check:storage": "tsx scripts/check-storage.ts",
     "generate:previews": "tsx scripts/generate-previews.ts",
     "prepare": "husky || true"

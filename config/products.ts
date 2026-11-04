@@ -32,6 +32,7 @@ export interface IndividualProduct {
   originalPriceInInr: number;
   fileKey: string;
   storagePath: string;
+  visualStoragePath?: string;
   category: string;
   pages: number;
   badge?: string;
@@ -153,6 +154,7 @@ export const INDIVIDUAL_PRODUCTS: IndividualProduct[] = [
     originalPriceInInr: 499,
     fileKey: 'bundle-all-access/01-Core-Foundations/01-linux-for-devops.pdf',
     storagePath: 'bundle-all-access/01-Core-Foundations/01-linux-for-devops.pdf',
+    visualStoragePath: 'visual/01-Core-Foundations/01-linux-for-devops-visual-infographics.pdf',
     category: 'Core Foundations',
     pages: 79,
     badge: 'PHASE 1',
@@ -166,6 +168,7 @@ export const INDIVIDUAL_PRODUCTS: IndividualProduct[] = [
     originalPriceInInr: 499,
     fileKey: 'bundle-all-access/01-Core-Foundations/02-git-and-github-pro.pdf',
     storagePath: 'bundle-all-access/01-Core-Foundations/02-git-and-github-pro.pdf',
+    visualStoragePath: 'visual/01-Core-Foundations/02-git-and-github-pro-visual-infographics.pdf',
     category: 'Core Foundations',
     pages: 30,
     badge: 'PHASE 1',
@@ -180,6 +183,7 @@ export const INDIVIDUAL_PRODUCTS: IndividualProduct[] = [
     originalPriceInInr: 699,
     fileKey: 'bundle-all-access/02-Containers-and-Orchestration/03-docker-working-guide.pdf',
     storagePath: 'bundle-all-access/02-Containers-and-Orchestration/03-docker-working-guide.pdf',
+    visualStoragePath: 'visual/02-Containers-and-Orchestration/03-docker-working-guide-visual-infographics.pdf',
     category: 'Containers',
     pages: 241,
     badge: 'PHASE 2',
@@ -207,6 +211,7 @@ export const INDIVIDUAL_PRODUCTS: IndividualProduct[] = [
     originalPriceInInr: 499,
     fileKey: 'bundle-all-access/03-Automation-and-Cloud/05-ci-cd-with-github-actions.pdf',
     storagePath: 'bundle-all-access/03-Automation-and-Cloud/05-ci-cd-with-github-actions.pdf',
+    visualStoragePath: 'visual/03-Automation-and-Cloud/05-ci-cd-with-github-actions-visual-infographics.pdf',
     category: 'Automation',
     pages: 73,
     badge: 'PHASE 3',

@@ -55,7 +55,7 @@ export async function GET(
               <div style="max-width: 480px; padding: 32px; background: white; border-radius: 16px; border: 1px solid #fed7aa; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
                 <div style="font-size: 40px; margin-bottom: 16px;">🚫</div>
                 <h2 style="color: #9a3412; margin: 0 0 12px 0;">Download Access Revoked</h2>
-                <p style="color: #57534e; font-size: 14px; line-height: 1.6;">This download link has been deactivated. If you believe this is in error, contact support@devopswithjeet.in.</p>
+                <p style="color: #57534e; font-size: 14px; line-height: 1.6;">This download link has been deactivated. If you believe this is in error, contact support@devopsjeet.tech.</p>
                 <a href="/" style="display: inline-block; margin-top: 20px; background: #0284c7; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">Return to DevOps with Jeet</a>
               </div>
             </body>
@@ -79,7 +79,7 @@ export async function GET(
               <div style="max-width: 480px; padding: 32px; background: white; border-radius: 16px; border: 1px solid #fed7aa; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
                 <div style="font-size: 40px; margin-bottom: 16px;">🛑</div>
                 <h2 style="color: #9a3412; margin: 0 0 12px 0;">Download Limit Reached</h2>
-                <p style="color: #57534e; font-size: 14px; line-height: 1.6;">You have reached the maximum allowed downloads (${dbToken.maxUsageCount}) for this link. If you need a fresh link reissued, please email support@devopswithjeet.in with your order number.</p>
+                <p style="color: #57534e; font-size: 14px; line-height: 1.6;">You have reached the maximum allowed downloads (${dbToken.maxUsageCount}) for this link. If you need a fresh link reissued, please email support@devopsjeet.tech with your order number.</p>
                 <a href="/" style="display: inline-block; margin-top: 20px; background: #0284c7; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">Return to DevOps with Jeet</a>
               </div>
             </body>

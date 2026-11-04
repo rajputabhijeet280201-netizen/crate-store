@@ -53,7 +53,7 @@ export function DownloadEmailTemplate({
       </p>
       <hr style={{ border: 'none', borderTop: '1px solid #E2E6DF', margin: '30px 0' }} />
       <p style={{ fontSize: '12px', color: '#52605B' }}>
-        Need help? Reply to this email or contact support@devopswithjeet.in
+        Need help? Reply to this email or contact support@devopsjeet.tech
       </p>
     </div>
   );

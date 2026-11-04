@@ -71,7 +71,7 @@ export async function sendPurchaseEmail({
             
             <div style="font-size: 12px; color: #94a3b8; text-align: center;">
               <p style="margin: 0 0 4px 0;">DevOps with Jeet • Digital Learning</p>
-              <p style="margin: 0;">Need assistance? Reply directly to this email or write to <a href="mailto:support@devopswithjeet.in" style="color: #64748b;">support@devopswithjeet.in</a></p>
+              <p style="margin: 0;">Need assistance? Reply directly to this email or write to <a href="mailto:support@devopsjeet.tech" style="color: #64748b;">support@devopsjeet.tech</a></p>
             </div>
           </div>
         `,
