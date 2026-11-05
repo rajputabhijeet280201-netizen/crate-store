@@ -2,11 +2,24 @@ import { Cashfree, CFEnvironment } from 'cashfree-pg';
 import crypto from 'crypto';
 import { env } from './env';
 
-// Determine Cashfree API Environment
-const cfEnvironment =
-  env.CASHFREE_ENV === 'PRODUCTION'
-    ? CFEnvironment.PRODUCTION
-    : CFEnvironment.SANDBOX;
+/**
+ * Determine Cashfree API Environment
+ */
+export function isCashfreeProduction(): boolean {
+  if (env.CASHFREE_ENV === 'PRODUCTION') return true;
+  // If App ID does not start with TEST and is not placeholder, it is a production Merchant App ID
+  if (
+    env.CASHFREE_APP_ID &&
+    !env.CASHFREE_APP_ID.startsWith('TEST') &&
+    env.CASHFREE_APP_ID !== 'TEST_CF_APP_ID_PLACEHOLDER'
+  ) {
+    return true;
+  }
+  return false;
+}
+
+const isProd = isCashfreeProduction();
+const cfEnvironment = isProd ? CFEnvironment.PRODUCTION : CFEnvironment.SANDBOX;
 
 /**
  * Singleton Cashfree PG Client instance (SDK 6.x / API 2023-08-01)
@@ -58,6 +71,7 @@ export interface CashfreeOrderResponse {
   cfOrderId?: string;
   isMock?: boolean;
   error?: string;
+  environment?: 'production' | 'sandbox';
 }
 
 /**
@@ -137,6 +151,7 @@ export async function createCashfreeOrder(
       paymentSessionId: data.payment_session_id || '',
       orderStatus: data.order_status || 'ACTIVE',
       cfOrderId: data.cf_order_id ? String(data.cf_order_id) : undefined,
+      environment: isProd ? 'production' : 'sandbox',
     };
   } catch (error: any) {
     const errorDetails = error.response?.data || error.message;

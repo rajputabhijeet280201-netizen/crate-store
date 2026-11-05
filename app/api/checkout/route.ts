@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { PRODUCTS_CONFIG } from '@/config/products';
 import { createCashfreeOrder } from '@/lib/cashfree';
+import { env } from '@/lib/env';
 
 const checkoutRequestSchema = z.object({
   slug: z.string().min(1, 'Product slug is required'),
@@ -191,6 +192,7 @@ export async function POST(req: NextRequest) {
       productTitle: productConfig.name,
       amount: priceInInr,
       isMock: cfResult.isMock || false,
+      environment: cfResult.environment || (env.CASHFREE_ENV === 'PRODUCTION' ? 'production' : 'sandbox'),
     });
   } catch (err: any) {
     console.error('❌ Checkout API error:', err);

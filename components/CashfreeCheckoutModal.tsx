@@ -112,7 +112,13 @@ export function CashfreeCheckoutModal({
       }
 
       // 3. Initialize Cashfree JS SDK
-      const mode = (process.env.NEXT_PUBLIC_CASHFREE_ENV || 'sandbox') as 'sandbox' | 'production';
+      const mode: 'sandbox' | 'production' =
+        data.environment === 'production' ||
+        (process.env.NEXT_PUBLIC_CASHFREE_ENV || '').toLowerCase() === 'production'
+          ? 'production'
+          : 'sandbox';
+
+      console.log(`[Cashfree Checkout] Initializing checkout in mode: ${mode}`);
 
       if (window.Cashfree) {
         const cashfree = window.Cashfree({ mode });
