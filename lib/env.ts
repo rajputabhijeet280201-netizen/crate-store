@@ -4,8 +4,28 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   
   // App base URL
-  APP_URL: z.string().url().default('http://localhost:3000'),
-  NEXT_PUBLIC_APP_URL: z.string().url().default('http://localhost:3000'),
+  APP_URL: z
+    .string()
+    .url()
+    .default('http://localhost:3000')
+    .transform((url) => {
+      let cleaned = url.replace(/\/+$/, '');
+      if (cleaned.includes('devopswithjeet.tech') || cleaned.includes('devopsjeet.tech')) {
+        return 'https://www.devopsjeet.tech';
+      }
+      return cleaned;
+    }),
+  NEXT_PUBLIC_APP_URL: z
+    .string()
+    .url()
+    .default('http://localhost:3000')
+    .transform((url) => {
+      let cleaned = url.replace(/\/+$/, '');
+      if (cleaned.includes('devopswithjeet.tech') || cleaned.includes('devopsjeet.tech')) {
+        return 'https://www.devopsjeet.tech';
+      }
+      return cleaned;
+    }),
 
   // Database (Postgres via Prisma)
   DATABASE_URL: z
