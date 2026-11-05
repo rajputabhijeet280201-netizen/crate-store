@@ -103,8 +103,28 @@ export async function createCashfreeOrder(
   // Ensure sanitized 10-digit phone number
   const sanitizedPhone = customerPhone.replace(/\D/g, '').slice(-10) || '9999999999';
 
-  // If in local dev with placeholder credentials, provide a mock session for end-to-end sandbox testing
+  // If credentials are unconfigured or masked with placeholders
   if (!isCashfreeConfigured()) {
+    if (env.NODE_ENV === 'production') {
+      let errorMsg = 'Payment gateway credentials are not properly configured in Vercel.';
+      if (env.CASHFREE_SECRET_KEY && env.CASHFREE_SECRET_KEY.includes('xxxx')) {
+        errorMsg =
+          'CASHFREE_SECRET_KEY in Vercel contains masked "xxxx". Please reveal and copy the actual secret key from the Cashfree Dashboard and update Vercel.';
+      } else if (!env.CASHFREE_APP_ID || env.CASHFREE_APP_ID === 'TEST_CF_APP_ID_PLACEHOLDER') {
+        errorMsg = 'CASHFREE_APP_ID is missing or set to placeholder in Vercel.';
+      } else if (!env.CASHFREE_SECRET_KEY || env.CASHFREE_SECRET_KEY === 'TEST_CF_SECRET_KEY_PLACEHOLDER') {
+        errorMsg = 'CASHFREE_SECRET_KEY is missing or set to placeholder in Vercel.';
+      }
+      console.error(`❌ Cashfree configuration error in production: ${errorMsg}`);
+      return {
+        success: false,
+        orderId,
+        paymentSessionId: '',
+        orderStatus: 'FAILED',
+        error: errorMsg,
+      };
+    }
+
     console.warn(
       '⚠️ Cashfree API credentials not configured in .env. Returning local mock session for testing.'
     );
@@ -116,6 +136,7 @@ export async function createCashfreeOrder(
       orderStatus: 'ACTIVE',
       cfOrderId: `cf_${orderId}`,
       isMock: true,
+      environment: 'sandbox',
     };
   }
 
