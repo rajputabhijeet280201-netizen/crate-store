@@ -7,7 +7,6 @@ import { Pricing } from '@/components/Pricing';
 import { SalaryBenchmark } from '@/components/SalaryBenchmark';
 import { RoadmapTimeline } from '@/components/RoadmapTimeline';
 import { WhatsInside } from '@/components/WhatsInside';
-import { SampleChapterSection } from '@/components/SampleChapterSection';
 import { SocialProof } from '@/components/SocialProof';
 import { About } from '@/components/About';
 import { FAQ } from '@/components/FAQ';
@@ -95,10 +94,7 @@ export default function HomePage() {
         {/* 8. What's Inside (3 Core Curriculum Cards) */}
         <WhatsInside />
 
-        {/* 9. Non-blocking Free Sample Chapter Download Section */}
-        <SampleChapterSection />
-
-        {/* 10. Social Proof (Verified Feedback) */}
+        {/* 9. Social Proof (Verified Feedback) */}
         <SocialProof />
 
         {/* 11. About the Author */}

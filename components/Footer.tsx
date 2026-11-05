@@ -107,14 +107,6 @@ export function Footer() {
                   FAQ
                 </a>
               </li>
-              <li>
-                <a
-                  href="#sample-chapter"
-                  className="text-muted transition hover:text-ink focus-visible:outline-accent"
-                >
-                  Free Sample Chapter
-                </a>
-              </li>
             </ul>
           </div>
 

@@ -137,7 +137,14 @@ export function CashfreeCheckoutModal({
       }
     } catch (err: any) {
       console.error('Checkout error:', err);
-      setErrorMessage(err.message || 'An unexpected error occurred. Please try again.');
+      const raw = err.message || '';
+      if (raw.toLowerCase().includes('authentication') || raw.toLowerCase().includes('auth')) {
+        setErrorMessage(
+          'Payment gateway is temporarily updating credentials. Please try again in a moment or contact support@devopsjeet.tech.'
+        );
+      } else {
+        setErrorMessage(raw || 'An unexpected error occurred. Please try again.');
+      }
       setIsLoading(false);
     }
   };
