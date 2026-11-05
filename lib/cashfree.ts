@@ -60,6 +60,11 @@ export interface CashfreeOrderResponse {
 export async function createCashfreeOrder(
   params: CreateOrderParams
 ): Promise<CashfreeOrderResponse> {
+  const baseUrl =
+    env.APP_URL.includes('devopsjeet.tech') && !env.APP_URL.includes('www.')
+      ? 'https://www.devopsjeet.tech'
+      : env.APP_URL;
+
   const {
     orderId,
     orderAmount,
@@ -69,8 +74,8 @@ export async function createCashfreeOrder(
     customerEmail,
     customerPhone = '9999999999',
     orderNote,
-    returnUrl = `${env.APP_URL}/checkout/success?order_id={order_id}`,
-    notifyUrl = `${env.APP_URL}/api/webhook/cashfree`,
+    returnUrl = `${baseUrl}/checkout/success?order_id={order_id}`,
+    notifyUrl = `${baseUrl}/api/webhook/cashfree`,
     idempotencyKey,
   } = params;
 

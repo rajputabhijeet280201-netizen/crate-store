@@ -132,19 +132,17 @@ export function NotesPreview() {
                 setActiveFormat('visual');
                 setActivePageIndex(0);
               }}
-              className={`inline-flex items-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition ${
-                activeFormat === 'visual'
+              className={`inline-flex items-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition ${activeFormat === 'visual'
                   ? 'bg-[#0e593a] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
-              }`}
+                }`}
             >
               <span>🎨 Visual Infographics</span>
               <span
-                className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
-                  activeFormat === 'visual'
+                className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${activeFormat === 'visual'
                     ? 'bg-emerald-800 text-emerald-200'
                     : 'bg-slate-100 text-slate-600'
-                }`}
+                  }`}
               >
                 Diagrams
               </span>
@@ -156,19 +154,17 @@ export function NotesPreview() {
                 setActiveFormat('code');
                 setActivePageIndex(0);
               }}
-              className={`inline-flex items-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition ${
-                activeFormat === 'code'
+              className={`inline-flex items-center gap-2 rounded-xl px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition ${activeFormat === 'code'
                   ? 'bg-[#0e593a] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
-              }`}
+                }`}
             >
               <span>💻 Searchable Fieldbooks</span>
               <span
-                className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
-                  activeFormat === 'code'
+                className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${activeFormat === 'code'
                     ? 'bg-emerald-800 text-emerald-200'
                     : 'bg-slate-100 text-slate-600'
-                }`}
+                  }`}
               >
                 Code &amp; Commands
               </span>
@@ -483,9 +479,8 @@ export function NotesPreview() {
                     key={idx}
                     type="button"
                     onClick={() => setActivePageIndex(idx)}
-                    className={`h-2 rounded-full transition-all ${
-                      activePageIndex === idx ? 'w-6 bg-emerald-400' : 'w-2 bg-white/30'
-                    }`}
+                    className={`h-2 rounded-full transition-all ${activePageIndex === idx ? 'w-6 bg-emerald-400' : 'w-2 bg-white/30'
+                      }`}
                   />
                 ))}
               </div>

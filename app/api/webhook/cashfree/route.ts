@@ -13,13 +13,42 @@ import { env } from '@/lib/env';
  * 2. Raw body extraction before parsing to preserve HMAC integrity (vercel-labs/next-best-practices)
  * 3. Timing-safe constant-time signature verification (openai/security-best-practices)
  * 4. Idempotent order status transition to prevent duplicate token or email issuance
+ * 5. GET/HEAD & test probe acknowledgement for Cashfree dashboard verification
  */
+export async function GET() {
+  return NextResponse.json(
+    { status: 'active', gateway: 'cashfree', timestamp: new Date().toISOString() },
+    { status: 200 }
+  );
+}
+
+export async function HEAD() {
+  return new NextResponse(null, { status: 200 });
+}
+
 export async function POST(req: NextRequest) {
   try {
     // 1. Extract raw body text and headers
     const rawBody = await req.text();
     const signature = req.headers.get('x-webhook-signature');
     const timestamp = req.headers.get('x-webhook-timestamp');
+
+    // Parse JSON safely upfront to detect test pings
+    let payload: any = null;
+    try {
+      if (rawBody) {
+        payload = JSON.parse(rawBody);
+      }
+    } catch {
+      // Body is not JSON
+    }
+
+    const eventType = payload?.type || payload?.event || '';
+    const isTestProbe =
+      eventType.toUpperCase().includes('TEST') ||
+      payload?.test === true ||
+      (!signature && !timestamp) ||
+      !rawBody.trim();
 
     // 2. Cryptographic signature check
     const isSignatureValid = verifyCashfreeWebhookSignature({
@@ -29,6 +58,15 @@ export async function POST(req: NextRequest) {
     });
 
     if (!isSignatureValid) {
+      // Acknowledge dashboard test pings and health checks with HTTP 200
+      if (isTestProbe) {
+        console.log('ℹ️ Cashfree Dashboard test probe acknowledged with HTTP 200.');
+        return NextResponse.json(
+          { message: 'Cashfree test probe acknowledged', status: 'ok' },
+          { status: 200 }
+        );
+      }
+
       console.error('❌ Cashfree webhook rejected: Invalid signature or timestamp mismatch');
       return NextResponse.json(
         { error: 'Invalid or forged webhook signature' },
@@ -36,18 +74,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 3. Parse JSON safely
-    let payload: any;
-    try {
-      payload = JSON.parse(rawBody);
-    } catch {
-      return NextResponse.json({ error: 'Malformed JSON payload' }, { status: 400 });
-    }
-
-    const eventType = payload.type || payload.event;
-    const orderData = payload.data?.order || payload.order || {};
-    const paymentData = payload.data?.payment || payload.payment || {};
-    const customerData = payload.data?.customer_details || orderData.customer_details || {};
+    const orderData = payload?.data?.order || payload?.order || {};
+    const paymentData = payload?.data?.payment || payload?.payment || {};
+    const customerData = payload?.data?.customer_details || orderData?.customer_details || {};
 
     const orderId = orderData.order_id;
     if (!orderId) {
