@@ -16,16 +16,23 @@ export const cashfreeClient = new Cashfree(
   env.CASHFREE_APP_ID,
   env.CASHFREE_SECRET_KEY
 );
+cashfreeClient.XApiVersion = env.CASHFREE_API_VERSION || '2023-08-01';
 
 /**
  * Check if actual Cashfree API credentials have been configured
  */
 export function isCashfreeConfigured(): boolean {
+  if (env.CASHFREE_SECRET_KEY && env.CASHFREE_SECRET_KEY.includes('xxxx')) {
+    console.error(
+      '❌ Cashfree Secret Key contains masked placeholders ("xxxx"). Please copy the unmasked secret key or generate a new one in the Cashfree Dashboard.'
+    );
+  }
   return (
     Boolean(env.CASHFREE_APP_ID) &&
     Boolean(env.CASHFREE_SECRET_KEY) &&
     env.CASHFREE_APP_ID !== 'TEST_CF_APP_ID_PLACEHOLDER' &&
-    env.CASHFREE_SECRET_KEY !== 'TEST_CF_SECRET_KEY_PLACEHOLDER'
+    env.CASHFREE_SECRET_KEY !== 'TEST_CF_SECRET_KEY_PLACEHOLDER' &&
+    !env.CASHFREE_SECRET_KEY.includes('xxxx')
   );
 }
 

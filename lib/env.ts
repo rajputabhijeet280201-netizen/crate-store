@@ -21,11 +21,21 @@ const envSchema = z.object({
   NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().default('rzp_test_placeholder_key_id'),
 
   // Cashfree Payment Gateway
-  CASHFREE_APP_ID: z.string().default('TEST_CF_APP_ID_PLACEHOLDER'),
-  CASHFREE_SECRET_KEY: z.string().default('TEST_CF_SECRET_KEY_PLACEHOLDER'),
-  CASHFREE_ENV: z.enum(['SANDBOX', 'PRODUCTION']).default('SANDBOX'),
-  CASHFREE_API_VERSION: z.string().default('2023-08-01'),
-  NEXT_PUBLIC_CASHFREE_ENV: z.enum(['sandbox', 'production']).default('sandbox'),
+  CASHFREE_APP_ID: z.string().trim().default('TEST_CF_APP_ID_PLACEHOLDER'),
+  CASHFREE_SECRET_KEY: z.string().trim().default('TEST_CF_SECRET_KEY_PLACEHOLDER'),
+  CASHFREE_ENV: z
+    .string()
+    .trim()
+    .default('SANDBOX')
+    .transform((val) => val.toUpperCase())
+    .pipe(z.enum(['SANDBOX', 'PRODUCTION'])),
+  CASHFREE_API_VERSION: z.string().trim().default('2023-08-01'),
+  NEXT_PUBLIC_CASHFREE_ENV: z
+    .string()
+    .trim()
+    .default('sandbox')
+    .transform((val) => val.toLowerCase())
+    .pipe(z.enum(['sandbox', 'production'])),
 
   // Secure File Storage & Download Tokens
   STORAGE_PROVIDER: z.enum(['local', 's3', 'r2', 'supabase']).default('supabase'),

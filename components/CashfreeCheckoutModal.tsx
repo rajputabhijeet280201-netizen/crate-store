@@ -94,7 +94,11 @@ export function CashfreeCheckoutModal({
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Failed to initiate checkout with Cashfree.');
+        let msg = data.error || 'Failed to initiate checkout with Cashfree.';
+        if (msg.toLowerCase().includes('authentication failed')) {
+          msg = 'Cashfree Authentication Error: Please ensure your production App ID and unmasked Secret Key are properly set in Vercel and IP Whitelist is disabled in Cashfree Dashboard.';
+        }
+        throw new Error(msg);
       }
 
       // 2. If running with test mock session in development
